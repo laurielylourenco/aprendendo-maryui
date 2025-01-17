@@ -20,14 +20,9 @@
             </label>
  
             {{-- Brand --}}
-            <div>App</div>
+            <div>Learn</div>
         </x-slot:brand>
  
-        {{-- Right side actions --}}
-        <x-slot:actions>
-            <x-button label="Messages" icon="o-envelope" link="###" class="btn-ghost btn-sm" responsive />
-            <x-button label="Notifications" icon="o-bell" link="###" class="btn-ghost btn-sm" responsive />
-        </x-slot:actions>
     </x-nav>
  
     {{-- The main content with `full-width` --}}
