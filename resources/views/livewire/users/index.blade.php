@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Models\Country;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Livewire\Volt\Component;
@@ -13,7 +14,7 @@ new class extends Component {
     use WithPagination;
 
     public string $search = '';
-
+    public int $country_id = 0;
     public bool $drawer = false;
 
     public array $sortBy = ['column' => 'name', 'direction' => 'asc'];
@@ -27,7 +28,7 @@ new class extends Component {
     }
 
     // Delete action
-/*     public function delete($id): void
+    /*     public function delete($id): void
     {
         $this->warning("Will delete #$id", 'It is fake.', position: 'toast-bottom');
     } */
@@ -71,6 +72,7 @@ new class extends Component {
             ->with(['country'])
             ->withAggregate('country', 'name')
             ->when($this->search, fn(Builder $q) => $q->where('name', 'like', "%$this->search%"))
+            ->when($this->country_id, fn(Builder $q) => $q->where('country_id', $this->country_id))
             ->orderBy(...array_values($this->sortBy))
             ->paginate(5);
     }
@@ -86,7 +88,8 @@ new class extends Component {
     {
         return [
             'users' => $this->users(),
-            'headers' => $this->headers()
+            'headers' => $this->headers(),
+            'countries' => Country::all(),
         ];
     }
 }; ?>
@@ -112,12 +115,17 @@ new class extends Component {
     </x-card>
 
     <!-- FILTER DRAWER -->
-    <x-drawer wire:model="drawer" title="Filters" right separator with-close-button class="lg:w-1/3">
+    <x-drawer wire:model="drawer" title="Filters" class="lg:w-1/3" right separator with-close-button ...>
+
         <x-input placeholder="Search..." wire:model.live.debounce="search" icon="o-magnifying-glass" @keydown.enter="$wire.drawer = false" />
 
         <x-slot:actions>
             <x-button label="Reset" icon="o-x-mark" wire:click="clear" spinner />
             <x-button label="Done" icon="o-check" class="btn-primary" @click="$wire.drawer = false" />
         </x-slot:actions>
+
+        <div class="grid gap-5">
+            <x-select placeholder="Country" wire:model.live="country_id" :options="$countries" icon="o-flag" placeholder-value="0" />
+        </div>
     </x-drawer>
 </div>
