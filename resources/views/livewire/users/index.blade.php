@@ -27,12 +27,6 @@ new class extends Component {
         $this->success('Filters cleared.', position: 'toast-bottom');
     }
 
-    // Delete action
-    /*     public function delete($id): void
-    {
-        $this->warning("Will delete #$id", 'It is fake.', position: 'toast-bottom');
-    } */
-
     public function delete(User $user): void
     {
         $user->delete();
@@ -58,15 +52,7 @@ new class extends Component {
      */
     public function users(): LengthAwarePaginator
     {
-        /*   return collect([
-            ['id' => 1, 'name' => 'Mary', 'email' => 'mary@mary-ui.com', 'age' => 23],
-            ['id' => 2, 'name' => 'Giovanna', 'email' => 'giovanna@mary-ui.com', 'age' => 7],
-            ['id' => 3, 'name' => 'Marina', 'email' => 'marina@mary-ui.com', 'age' => 5],
-        ])
-            ->sortBy([[...array_values($this->sortBy)]])
-            ->when($this->search, function (Collection $collection) {
-                return $collection->filter(fn(array $item) => str($item['name'])->contains($this->search, true));
-            }); */
+
 
         return User::query()
             ->with(['country'])
@@ -75,6 +61,18 @@ new class extends Component {
             ->when($this->country_id, fn(Builder $q) => $q->where('country_id', $this->country_id))
             ->orderBy(...array_values($this->sortBy))
             ->paginate(5);
+    }
+
+    public function usersAll()
+    {
+
+
+        return User::query()
+            ->with(['country'])
+            ->withAggregate('country', 'name')
+            ->when($this->search, fn(Builder $q) => $q->where('name', 'like', "%$this->search%"))
+            ->when($this->country_id, fn(Builder $q) => $q->where('country_id', $this->country_id))
+            ->get();
     }
 
     public function updated($property): void
@@ -90,6 +88,7 @@ new class extends Component {
             'users' => $this->users(),
             'headers' => $this->headers(),
             'countries' => Country::all(),
+            't_total' => count($this->usersAll()),
         ];
     }
 }; ?>
@@ -102,6 +101,7 @@ new class extends Component {
         </x-slot:middle>
         <x-slot:actions>
             <x-button label="Filters" @click="$wire.drawer = true" responsive icon="o-funnel" />
+            <x-button label="Total" :badge="$t_total" class="btn-primary" />
         </x-slot:actions>
     </x-header>
 
@@ -126,6 +126,8 @@ new class extends Component {
 
         <div class="grid gap-5">
             <x-select placeholder="Country" wire:model.live="country_id" :options="$countries" icon="o-flag" placeholder-value="0" />
+
         </div>
+
     </x-drawer>
 </div>
