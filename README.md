@@ -1,4 +1,5 @@
 # aprendendo-maryui
+<<<<<<< HEAD
 
 **Aprendendo MaryUI** é um projeto desenvolvido com Laravel, focado em aprender e implementar o framework **MaryUI** para o desenvolvimento de interfaces de usuário modernas e responsivas.
 
@@ -84,4 +85,9 @@ Este projeto está licenciado sob a [MIT License](LICENSE).
 
 
 
+=======
+Aprendendo maryui lib frontend para laravel 
+
+[Objetivo desse projeto aprender essa lib para futuros projetos pessoais ](https://mary-ui.com/bootcamp/01)
+>>>>>>> d3e8ccd (atualizando usuarios)
 

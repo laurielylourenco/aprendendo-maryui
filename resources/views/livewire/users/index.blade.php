@@ -27,6 +27,15 @@ new class extends Component {
         $this->success('Filters cleared.', position: 'toast-bottom');
     }
 
+<<<<<<< HEAD
+=======
+    // Delete action
+    /*     public function delete($id): void
+    {
+        $this->warning("Will delete #$id", 'It is fake.', position: 'toast-bottom');
+    } */
+
+>>>>>>> d3e8ccd (atualizando usuarios)
     public function delete(User $user): void
     {
         $user->delete();
@@ -107,8 +116,9 @@ new class extends Component {
 
     <!-- TABLE  -->
     <x-card>
-        <x-table :headers="$headers" :rows="$users" :sort-by="$sortBy" ... with-pagination>
+        <x-table :headers="$headers" :rows="$users" :sort-by="$sortBy" ... with-pagination link="users/{id}/edit">
             @scope('actions', $user)
+
             <x-button icon="o-trash" wire:click="delete({{ $user['id'] }})" wire:confirm="Are you sure?" spinner class="btn-ghost btn-sm text-red-500" />
             @endscope
         </x-table>
