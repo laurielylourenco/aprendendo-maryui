@@ -8,6 +8,9 @@
     <title>{{ isset($title) ? $title.' - '.config('app.name') : config('app.name') }}</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" />
 </head>
 
 <body class="font-sans antialiased">
@@ -24,16 +27,12 @@
             {{-- Brand --}}
             <div>Learn</div>
         </x-slot:brand>
-<<<<<<< HEAD
- 
-=======
-
-        {{-- Right side actions --}}
-        <x-slot:actions>
+        <<<<<<< HEAD======={{-- Right side actions --}}
+            <x-slot:actions>
             <x-button label="Messages" icon="o-envelope" link="###" class="btn-ghost btn-sm" responsive />
             <x-button label="Notifications" icon="o-bell" link="###" class="btn-ghost btn-sm" responsive />
-        </x-slot:actions>
->>>>>>> d3e8ccd (atualizando usuarios)
+            </x-slot:actions>
+            >>>>>>> d3e8ccd (atualizando usuarios)
     </x-nav>
 
     {{-- The main content with `full-width` --}}
