@@ -27,15 +27,6 @@ new class extends Component {
         $this->success('Filters cleared.', position: 'toast-bottom');
     }
 
-<<<<<<< HEAD
-=======
-    // Delete action
-    /*     public function delete($id): void
-    {
-        $this->warning("Will delete #$id", 'It is fake.', position: 'toast-bottom');
-    } */
-
->>>>>>> d3e8ccd (atualizando usuarios)
     public function delete(User $user): void
     {
         $user->delete();
